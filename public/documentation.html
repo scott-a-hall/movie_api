@@ -24,5 +24,132 @@
       Users can create profiles to save information about their favorite movies
       so it is easily accessible
     </p>
+
+    <p><strong> Resource URL </strong></p>
+    <p>https://github.com/scott-a-hall/movie_api</p>
+
+    <p><strong>Parameters</strong></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Business Logic</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request body data format</th>
+          <th>Response body data format</th>
+        </tr>
+      </thead>
+      <!-- <tbody> -->
+        <tr>
+          <td>Return a list of all movies to the user.</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>a JSON object holding data about all the movies.</td>
+        </tr>
+        <tr>
+          <td>return data (description, genre, director, image URL, featured or not)</br> about a single movie to the user.</td>
+          <td>/movies/:title</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about a single movie structured like this:</br>
+            {</br>
+              title: '',</br>
+              description: '',</br>
+              genre: '',</br>
+              director: '',</br>
+              image: '',</br>
+              featured: ''</br>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>Return data about a genre (description) by name/title.</td>
+          <td>/movies/genre/:name</td>
+          <td>GET</td>
+          <td>None</td>
+          <td> A JSON object holding data about a genre stuctured like:</br>
+            {</br>
+              genre: '',</br>
+              description: '',</br>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>Return data about a director (bio, birth year, death year) by name.</td>
+          <td>/movies/directors/:name</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about a director structured like:</br>
+            {</br>
+              name: '',</br>
+              bio: '',</br>
+              born: '',</br>
+              died: ''</br>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow new users to register.</td>
+          <td>/movies/users</td>
+          <td>POST</td>
+          <td>A JSON object holding data about the user structured like:</br>
+            {</br>
+              name: '',</br>
+              username: uuid,</br>
+              password: '',</br>
+              e-mail: '',</br>
+              date of birth: ''</br>
+            }
+          </td>
+          <td>A JSON object holding data about the user structured like:</br>
+            {</br>
+              name: '',</br>
+              username: uuid,</br>
+              password: '',</br>
+              e-mail: '',</br>
+              date of birth: ''</br>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user info (password, e-mail, date of birth).</td>
+          <td>/movies/users/:name</td>
+          <td>PUT</td>
+          <td>None</td>
+          <td>A text message indicating whether the user's information was successfully updated.</td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their list of favorites.</td>
+          <td>/movies/users/favorites</td>
+          <td>POST</td>
+          <td>A JSON object holding data about the user's favorite movies structured like:</br>
+            {</br>
+              title: '',</br>
+            }
+          </td>
+          <td>A JSON object holding data about the user's favorite movies structured like:</br>
+            {</br>
+              title: '',</br>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to remove a movie from their list of favorites.</td>
+          <td>/movies/users/favorites/:title</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message indicating whether the movie was successfully removed from the favorites list.</td>
+        </tr>
+        <tr>
+          <td>Allow existing users to deregister.</td>
+          <td>/movies/users/:name</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message indicating the user was removed.</td>
+        </tr>
+      <!-- </tbody> -->
+    </table>
+
   </body>
 </html>
