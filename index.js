@@ -17,7 +17,7 @@ let movies = [
     description:
       "After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen to return it.",
     genre: "Comedy",
-    director: "Peter Farrelly, Bobby Farrelly",
+    director: "Peter Farrelly",
     image_URL: "",
     featured: "Yes"
   },
@@ -44,7 +44,7 @@ let movies = [
     description:
       "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
     genre: "Adventure",
-    director: "Roger Allers, Rob Minkoff",
+    director: "Roger Allers",
     image_URL: "",
     featured: "Yes"
   },
@@ -75,13 +75,6 @@ let directors = [
     born: "December 17, 1956",
     died: "Still living"
   },
-  {
-    name: "Bobby Farrelly",
-    bio:
-      "Born in Cumberland, Rhode Island, Bobby Farrelly is an American film director, screenwriter and producer.",
-    born: "June 17, 1958",
-    died: "Still living"
-  }
 ];
 
 let users = [
@@ -221,7 +214,7 @@ app.delete("/movies/users/:name", (req, res) => {
   }
 });
 
-app.use("/documentation.html", express.static("public"));
+app.use("/documentation", express.static("public/documentation.html"));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
