@@ -4,6 +4,15 @@ const express = require("express"),
 
 const app = express();
 
+//Integrate mongoose
+const mongoose = require("mongoose");
+const Models = require('./models.js');
+  Movies = Models.Movie;
+  Users = Models.User
+
+//Connect to MongoDB database
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
 app.use(bodyParser.json());
 
 let myLogger = (req, res, next) => {
@@ -11,87 +20,7 @@ let myLogger = (req, res, next) => {
   next();
 };
 
-let movies = [
-  {
-    title: "Dumb & Dumber",
-    description:
-      "After a woman leaves a briefcase at the airport terminal, a dumb limo driver and his dumber friend set out on a hilarious cross-country road trip to Aspen to return it.",
-    genre: "Comedy",
-    director: "Peter Farrelly",
-    image_URL: "",
-    featured: "Yes"
-  },
-  {
-    title: "The Dark Knight",
-    description:
-      "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
-    genre: "Action",
-    director: "Christopher Nolan",
-    image_URL: "",
-    featured: "Yes"
-  },
-  {
-    title: "We Were Soldiers",
-    description:
-      "The story of the first major battle of the American phase of the Vietnam War, and the soldiers on both sides that fought it, while their wives wait nervously and anxiously at home for the good news or the bad news.",
-    genre: "Action",
-    director: "Randall Wallace",
-    image_URL: "",
-    featured: "Yes"
-  },
-  {
-    title: "The Lion King",
-    description:
-      "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
-    genre: "Adventure",
-    director: "Roger Allers",
-    image_URL: "",
-    featured: "Yes"
-  },
-  {
-    title: "The Notebook",
-    description:
-      "A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences.",
-    genre: "Romance",
-    director: "Nick Cassavetes",
-    image_URL: "",
-    featured: "Yes"
-  }
-];
 
-let genres = [
-  {
-    name: "Comedy",
-    description:
-      "A comedy film is one in which the main purpose of the film is to make the audience laugh."
-  }
-];
-
-let directors = [
-  {
-    name: "Peter Farrelly",
-    bio:
-      "Born in Phoenixville, Pennsylvania, Peter Farrelly is an American film director, screenwriter, producer and novelist.",
-    born: "December 17, 1956",
-    died: "Still living"
-  },
-];
-
-let users = [
-  {
-    name: "John Doe",
-    username: "",
-    password: "jdoe1",
-    email: "jdoe@email.com",
-    date_of_birth: "January 1, 2000"
-  }
-];
-
-let favMovies = [
-  {
-    title: "Field of Dreams"
-  }
-];
 
 app.use(myLogger);
 
@@ -132,7 +61,7 @@ app.get("/movies/directors/:name", (req, res) => {
 });
 
 //Get the data about a user
-app.get("/movies/users/:name", (req, res) => {
+app.get("/users/:name", (req, res) => {
   res.json(
     users.find(user => {
       return user.name === req.params.name;
@@ -141,21 +70,42 @@ app.get("/movies/users/:name", (req, res) => {
 });
 
 //Add new user
-app.post("/movies/users", (req, res) => {
-  let newUser = req.body;
-
-  if (!newUser.name) {
-    const message = "Missing name in request body";
-    res.status(400).send(message);
-  } else {
-    newUser.username = uuid.v4();
-    users.push(newUser);
-    res.status(201).send(newUser);
-  }
+/* We'll expect JSON in this information
+{
+  ID: Integer,
+  Username: String,
+  Password: String,
+  Email: String,
+  Birthday: Date
+}*/
+app.post("/users", (req, res) => {
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + ' already exists.');
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) => {res.send(201).json(user)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 
 //Update user information
-app.put("/movies/users/:name", (req, res) => {
+app.put("/users/:name", (req, res) => {
   let user = users.find(user => {
     return user.name === req.params.name;
   });
@@ -174,7 +124,7 @@ app.put("/movies/users/:name", (req, res) => {
   }
 });
 
-app.post("/movies/users/favorites", (req, res) => {
+app.post("/users/favorites", (req, res) => {
   let newMovie = req.body;
 
   if (!newMovie.title) {
@@ -187,7 +137,7 @@ app.post("/movies/users/favorites", (req, res) => {
 });
 
 //Delete movies from favorites list
-app.delete("/movies/users/favorites/:title", (req, res) => {
+app.delete("/users/favorites/:title", (req, res) => {
   let movie = favMovies.find(movie => {
     return movie.title === req.params.title;
   });
@@ -201,7 +151,7 @@ app.delete("/movies/users/favorites/:title", (req, res) => {
 });
 
 //Delete user account
-app.delete("/movies/users/:name", (req, res) => {
+app.delete("/users/:name", (req, res) => {
   let user = users.find(user => {
     return user.name === req.params.name;
   });
