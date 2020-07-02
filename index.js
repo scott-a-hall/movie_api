@@ -6,12 +6,13 @@ const app = express();
 
 //Integrate mongoose
 const mongoose = require("mongoose");
-const Models = require('./models.js');
-  Movies = Models.Movie;
-  Users = Models.User;
+const Models = require("./models.js");
+
+const Movies = Models.Movie;
+const Users = Models.User;
 
 //Connect to MongoDB database
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/myFlixDB", { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(bodyParser.json());
 
@@ -73,7 +74,7 @@ app.get('/users', (req, res) => {
 });
 
 //Get the data about a user by username
-app.get("/users/:username", (req, res) => {
+app.get("/users/:Username", (req, res) => {
   Users.findOne({ Username: req.params.Username })
   .then((user) => {
     res.json(user);
@@ -99,23 +100,24 @@ app.post("/users", (req, res) => {
       if (user) {
         return res.status(400).send(req.body.Username + ' already exists.');
       } else {
-        Users
-          .create({
+        Users.create({
             Username: req.body.Username,
             Password: req.body.Password,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
-          .then((user) => {res.send(201).json(user)})
+          .then((user) => {
+            res.status(201).json(user);
+          })
         .catch((error) => {
           console.error(error);
           res.status(500).send('Error: ' + error);
-        })
+        });
       }
     })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
     });
 });
 
