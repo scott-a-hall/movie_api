@@ -21,44 +21,58 @@ let myLogger = (req, res, next) => {
   next();
 };
 
-
-
 app.use(myLogger);
-
-//Gets the list of data about all movies
-app.get("/movies", (req, res) => {
-  res.json(movies);
-});
 
 app.get("/", (req, res) => {
   res.send("My top 10 movies");
 });
 
+//Gets the list of data about all movies
+app.get("/movies", (req, res) => {
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
 //Get the data about a single movie, by name
-app.get("/movies/:title", (req, res) => {
-  res.json(
-    movies.find(movie => {
-      return movie.title === req.params.title;
+app.get("/movies/:Title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then((movie) => {
+      res.json(movie);
     })
-  );
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
-//Get the data about a genre by name/title
-app.get("/movies/genres/:name", (req, res) => {
-  res.json(
-    genres.find(genre => {
-      return genre.name === req.params.name;
+//Get the data about a genre by movie title
+app.get("/movies/Genre/:Title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then((movie) => {
+      res.status(201).json('This movie\'s genre is ' + movie.Genre.Name + '.');
     })
-  );
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
-//Get the data about a director
-app.get("/movies/directors/:name", (req, res) => {
-  res.json(
-    directors.find(director => {
-      return director.name === req.params.name;
+//Get the data about a director by name
+app.get("/movies/Director/:Name", (req, res) => {
+  Movies.findOne({ 'Director.Name': req.params.Name })
+    .then((movies) => {
+      res.status(201).json(movies.Director.Bio);
     })
-  );
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 //Get all users
@@ -167,17 +181,19 @@ app.post("/users/:Username/Movies/:MovieID", (req, res) => {
 });
 
 //Delete movies from favorites list
-app.delete("/users/favorites/:title", (req, res) => {
-  let movie = favMovies.find(movie => {
-    return movie.title === req.params.title;
-  });
-
-  if (movie) {
-    favMovies = favMovies.filter(movie => {
-      return movie.title !== req.params.title;
-    });
-    res.status(201).send(req.params.title + " was successfully removed.");
-  }
+app.delete("/users/:Username/Movies/:Title", (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username },
+    { $pull: { FavoriteMovie: req.params.Title } },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
 //Delete a user by username
