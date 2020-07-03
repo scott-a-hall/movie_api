@@ -14,7 +14,13 @@ const Users = Models.User;
 //Connect to MongoDB database
 mongoose.connect("mongodb://localhost:27017/myFlixDB", { useNewUrlParser: true, useUnifiedTopology: true });
 
+//Middleware
 app.use(bodyParser.json());
+let auth = require('./auth')(app);
+
+//Integrate passport
+const passport = require('passport');
+require('./passport');
 
 let myLogger = (req, res, next) => {
   console.log(req.url);
