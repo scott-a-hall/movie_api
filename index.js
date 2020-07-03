@@ -144,24 +144,25 @@ app.post("/users", (req, res) => {
   Birthday: Date
 }*/
 app.put("/users/:Username", (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
-    $set:
-    {
-      Username: req.body.Username,
-      Password: req.body.Password,
-      Email: req.body.Email,
-      Birthday: req.body.Birthday
+  Users.findOneAndUpdate({ Username: req.params.Username },
+    { $set:
+      {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+    },
+    { new: true }, //This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+      if(err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
     }
-  },
-  { new: true }, //This line makes sure that the updated document is returned
-  (err, updatedUser) => {
-    if(err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    } else {
-      res.json(updatedUser);
-    }
-  });
+  );
 });
 
 //Add a movie to a user's list of favories
