@@ -11,19 +11,17 @@ export function LoginView(props) {
         props.onLoggedIn(Username);
     }
 
-    render() {
-        return (
-            <form>
-                <label>
-                    Username:
-                    <input type="text" value={Username} onChange={e => setUsername(e.target.value)}/>
-                </label>
-                <label>
-                    Password:
-                    <input type="password" value={Password} onChange={e => setPassword(e.target.value)}/>
-                </label>
-                <button type="button" onClick={handleSubmit}>Submit</button>
-            </form>
-        );
-    }
+    return (
+        <form>
+            <label>
+                Username:
+                <input type="text" value={Username} onChange={e => setUsername(e.target.value)}/>
+            </label>
+            <label>
+                Password:
+                <input type="password" value={Password} onChange={e => setPassword(e.target.value)}/>
+            </label>
+            <button type="button" onClick={handleSubmit}>Submit</button>
+        </form>
+    );
 }
