@@ -15,7 +15,8 @@ export class MainView extends React.Component {
         this.state = {
             movies: null,
             selectedMovie: null,
-            user: null
+            user: null,
+            register: false
         };
     }
 
@@ -45,13 +46,21 @@ export class MainView extends React.Component {
         });
     }
 
+    onRegister() {
+        this.setState({
+            register: true
+        });
+    }
+
     //This overrides the render() method of the superclass
     //No need to call super() though, as it does nothing by default
     render() {
         //If the state isn't initialized, this will throw on runtime before the data is initially loaded
-        const { movies, selectedMovie, user } = this.state;
+        const { movies, selectedMovie, user, register } = this.state;
 
         if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>;
+
+        if(onRegister) return <RegistrationView/>
 
         //Before the movies have been loaded
         if (!movies) return <div className="main-view"/>;
