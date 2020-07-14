@@ -11,6 +11,7 @@ export function RegistrationView(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(Username, Password, Email, Birthday);
+        props.onRegister(Username);
     }
 
     return (
