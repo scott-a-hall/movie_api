@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import './registration-view.scss';
 
 export function RegistrationView(props) {
     const [ Username, createUsername ] = useState ('');
@@ -15,7 +17,8 @@ export function RegistrationView(props) {
     }
 
     return (
-        <Form className="registration-form">
+        <Container className="registration-form">
+        <Form>
             <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="Username" placeholder="Enter username" value={Username} onChange={e => createUsername(e.target.value)}/>
@@ -34,5 +37,6 @@ export function RegistrationView(props) {
             </Form.Group>
             <Button type="submit" onClick={handleSubmit}>Register</Button>
         </Form>
+        </Container>
     );
 }
