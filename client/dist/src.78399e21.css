@@ -8,6 +8,17 @@
   padding-top: 10px;
   width: 20em;
 }
+.card-container {
+  margin: 20px;
+}
+.movie-view {
+  margin: 20px;
+}
+
+.label {
+  padding-top: 5px;
+  padding-bottom: 3px;
+}
 .my-flix {
   color: steelblue;
 }

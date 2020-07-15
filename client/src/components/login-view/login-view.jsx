@@ -5,14 +5,14 @@ import Container from 'react-bootstrap/Container';
 import './login-view.scss';
 
 export function LoginView(props) {
-    const [ Username, setUsername ] = useState('');
-    const [ Password, setPassword ] = useState('');
+    const [ username, setUsername ] = useState('');
+    const [ password, setPassword ] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(Username, Password);
+        console.log(username, password);
         //Send a request to the server for authentication then call this.props.onLoggedIn(Username)
-        props.onLoggedIn(Username);
+        props.onLoggedIn(username);
     };
 
     return (
@@ -20,11 +20,11 @@ export function LoginView(props) {
         <Form>
             <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username:</Form.Label>
-                <Form.Control type="text" value={Username} onChange={e => setUsername(e.target.value)}/>
+                <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)}/>
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password:</Form.Label>
-                <Form.Control type="password" value={Password} onChange={e => setPassword(e.target.value)}/>
+                <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
             <Button type="button" onClick={handleSubmit}>Submit</Button>
         </Form>
