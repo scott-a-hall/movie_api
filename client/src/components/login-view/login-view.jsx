@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import './login-view.scss';
 
 export function LoginView(props) {
     const [ Username, setUsername ] = useState('');
@@ -14,7 +16,8 @@ export function LoginView(props) {
     };
 
     return (
-        <Form className="login-form">
+        <Container className="login-form">
+        <Form>
             <Form.Group controlId="formBasicUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control type="text" value={Username} onChange={e => setUsername(e.target.value)}/>
@@ -25,5 +28,6 @@ export function LoginView(props) {
             </Form.Group>
             <Button type="button" onClick={handleSubmit}>Submit</Button>
         </Form>
+        </Container>
     );
 }
