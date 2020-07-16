@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
@@ -21,6 +22,16 @@ export class MainView extends React.Component {
     }
 
     //One of the "hooks" available in a React component
+    componentDidMount() {
+        let accessToken = localStorage.getItem('token');
+        if (accessToken !== null) {
+            this.setState({
+                user: localStorage.getItem('user')
+            });
+            this.getMovies(accessToken);
+        }
+    }
+
     getMovies(token) {
         axios.get('https://sah-movie-database.herokuapp.com/movies', {
             headers: { Authorization: 'Bearer ${token}'}
@@ -53,6 +64,15 @@ export class MainView extends React.Component {
         this.getMovies(authData.token);
     }
 
+    onLoggedOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.setState({
+            user: null
+        });
+        window.open('/', '_self');
+    }
+
     onRegister() {
         this.setState({
             register: true
@@ -80,6 +100,7 @@ export class MainView extends React.Component {
                     <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
                 ))
                 }
+                <Button onClick={() => this.onLoggedOut()}>Log Out</Button>
             </div>
         );
     }

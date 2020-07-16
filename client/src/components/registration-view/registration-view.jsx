@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import './registration-view.scss';
-import { checkPropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 
 export function RegistrationView(props) {
     const [ username, createUsername ] = useState ('');
@@ -43,5 +43,5 @@ export function RegistrationView(props) {
 };
 
 RegistrationView.propTyes = {
-    onRegister: checkPropTypes.func.isRequired
+    onRegister: PropTypes.func.isRequired
 };
