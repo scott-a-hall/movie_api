@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import './registration-view.scss';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 export function RegistrationView(props) {
     const [ username, createUsername ] = useState ('');
@@ -13,8 +14,20 @@ export function RegistrationView(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(username, password, email, birthday);
-        props.onRegister(username);
+        axios.post('https://sah-movie-database.herokuapp.com/users', {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthday: birthday
+        })
+        .then(response => {
+            const data = response.data;
+            console.log(data);
+            window.open('/','_self');
+        })
+        .catch(e => {
+            console.log('Error registering the user')
+        });
     }
 
     return (

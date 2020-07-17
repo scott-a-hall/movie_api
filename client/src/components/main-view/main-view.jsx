@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -14,22 +16,11 @@ export class MainView extends React.Component {
 
         //Initialize the state to an empty object so we can destructure it later
         this.state = {
-            movies: null,
+            movies: [],
             selectedMovie: null,
             user: null,
             register: false
         };
-    }
-
-    //One of the "hooks" available in a React component
-    componentDidMount() {
-        let accessToken = localStorage.getItem('token');
-        if (accessToken !== null) {
-            this.setState({
-                user: localStorage.getItem('user')
-            });
-            this.getMovies(accessToken);
-        }
     }
 
     getMovies(token) {
@@ -45,6 +36,17 @@ export class MainView extends React.Component {
         .catch(function (error) {
             console.log(error);
         });
+    }
+
+    //One of the "hooks" available in a React component
+    componentDidMount() {
+        let accessToken = localStorage.getItem('token');
+        if (accessToken !== null) {
+            this.setState({
+                user: localStorage.getItem('user')
+            });
+            this.getMovies(accessToken);
+        }
     }
 
     onMovieClick(movie) {
@@ -83,9 +85,9 @@ export class MainView extends React.Component {
     //No need to call super() though, as it does nothing by default
     render() {
         //If the state isn't initialized, this will throw on runtime before the data is initially loaded
-        const { movies, selectedMovie, user, register } = this.state;
+        const { movies, user, register } = this.state;
 
-        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>;
+        
 
         if (!register) return <RegistrationView onRegister={register => this.onRegister(register)} />
 
@@ -93,15 +95,18 @@ export class MainView extends React.Component {
         if (!movies) return <div className="main-view"/>;
 
         return (
-            <div className="main-view">
-                {selectedMovie
-                    ? <MovieView movie={selectedMovie}/>
-                    : movies.map(movie => (
-                    <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-                ))
-                }
-                <Button onClick={() => this.onLoggedOut()}>Log Out</Button>
-            </div>
+            <Router>
+                <div className="main-view">
+                    <Route exact path='/' render={() => {
+                        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>;
+                        return movies.map(m => <MovieCard key={m._id} movie={m}/>)
+                        }
+                    }/>
+                    <Route path='/register' render={() => <RegistrationView />} />
+                    <Route path='/movies/:movieId' render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+                    <Button onClick={() => this.onLoggedOut()}>Log Out</Button>
+                </div>
+            </Router>
         );
     }
 }
