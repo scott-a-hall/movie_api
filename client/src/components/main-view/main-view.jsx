@@ -89,7 +89,7 @@ export class MainView extends React.Component {
 
         
 
-        if (!register) return <RegistrationView onRegister={register => this.onRegister(register)} />
+        //if (!register) return <RegistrationView onRegister={register => this.onRegister(register)} />
 
         //Before the movies have been loaded
         if (!movies) return <div className="main-view"/>;
