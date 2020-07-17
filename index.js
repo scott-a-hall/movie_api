@@ -20,9 +20,9 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 
 //Middleware
 app.use(bodyParser.json());
-let auth = require("./auth")(app);
+
 const allowedOrigins = ["http://localhost:8080", "http://localhost:1234", "*"];
-app.use(cors({
+app.use(cors(/*{
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){ //If a specific origin isn't found on the list of allowed allowedOrigins
@@ -31,7 +31,8 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));
+}*/));
+let auth = require("./auth")(app);
 
 //Integrate passport
 const passport = require("passport");
