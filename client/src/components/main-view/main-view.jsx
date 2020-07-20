@@ -85,9 +85,9 @@ export class MainView extends React.Component {
     //No need to call super() though, as it does nothing by default
     render() {
         //If the state isn't initialized, this will throw on runtime before the data is initially loaded
-        const { movies, user, register } = this.state;
+        const { movies, user } = this.state;
 
-        
+        if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>;
 
         //if (!register) return <RegistrationView onRegister={register => this.onRegister(register)} />
 
