@@ -36454,7 +36454,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       //If the state isn't initialized, this will throw on runtime before the data is initially loaded
       var _this$state = this.state,
           movies = _this$state.movies,
-          user = _this$state.user;
+          user = _this$state.user,
+          register = _this$state.register;
       if (!user) return _react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
           return _this3.onLoggedIn(user);
@@ -36604,7 +36605,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65523" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57849" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
