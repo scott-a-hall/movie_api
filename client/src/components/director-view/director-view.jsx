@@ -18,14 +18,16 @@ export class DirectorView extends React.Component {
 
         return (
             <div className="director-view">
-                <Card.Body>
-                    <Card.Title>Director: {director.Name}</Card.Title>
-                    <Card.Text>About: {director.Bio}</Card.Text>
-                    <Card.Text>Born: {director.Born}</Card.Text>
-                    <Link to={'/'}>
-                    <   Button variant="link">Back</Button>
-                    </Link>
-                </Card.Body>
+                <Card style={{ width: '20rem' }}>
+                    <Card.Body>
+                        <Card.Title>Director: {director.Name}</Card.Title>
+                        <Card.Text>About: {director.Bio}</Card.Text>
+                        <Card.Text>Born: {director.Born}</Card.Text>
+                        <Link to={'/'}>
+                            <   Button variant="link">Back</Button>
+                        </Link>
+                    </Card.Body>
+                </Card>
             </div>
         );
     }
