@@ -35754,17 +35754,17 @@ exports.LoginView = LoginView;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
-var _axios = _interopRequireDefault(require("axios"));
-
 require("./login-view.scss");
-
-var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35796,7 +35796,7 @@ function LoginView(props) {
       setPassword = _useState4[1];
 
   var handleSubmit = function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); //Send a request to the server for authentication
 
     _axios.default.post('https://sah-movie-database.herokuapp.com/login', {
       Username: username,
@@ -35805,92 +35805,40 @@ function LoginView(props) {
       var data = response.data;
       props.onLoggedIn(data);
     }).catch(function (e) {
-      console.log('no such user');
+      console.log('No such user');
     });
   };
 
   return _react.default.createElement(_Container.default, {
-    className: "login-container"
+    className: "login-form"
   }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username:"), _react.default.createElement(_Form.default.Control, {
     type: "text",
-    placeholder: "Enter username",
     value: username,
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
   })), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicPassword"
-  }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
+  }, _react.default.createElement(_Form.default.Label, null, "Password:"), _react.default.createElement(_Form.default.Control, {
     type: "password",
-    placeholder: "Password",
     value: password,
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
   })), _react.default.createElement(_Button.default, {
-    className: "button-main",
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Sign In"), _react.default.createElement(_reactRouterDom.Link, {
-    to: "/register"
-  }, _react.default.createElement(_Button.default, {
-    variant: "link",
-    className: "registerButton",
-    type: "submit"
-  }, "Sign Up"))));
+  }, "Submit")));
 }
-/*import React, { useState } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import './login-view.scss';
 
-export function LoginView(props) {
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword ] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        //Send a request to the server for authentication
-        axios.post('https://sah-movie-database.herokuapp.com/login', {
-            Username: username,
-            Password: password
-        })
-        .then((response) => {
-            const data = response.data;
-            props.onLoggedIn(data);
-        })
-        .catch((e) => {
-            console.log('No such user')
-        });
-    };
-
-    return (
-        <Container className="login-form">
-        <Form>
-            <Form.Group controlId="formBasicUsername">
-                <Form.Label>Username:</Form.Label>
-                <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password:</Form.Label>
-                <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-        </Form>
-        </Container>
-    );
-};
-
+;
 LoginView.propTypes = {
-    onLoggedIn: PropTypes.func.isRequired
-};*/
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js","./login-view.scss":"components/login-view/login-view.scss","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
+  onLoggedIn: _propTypes.default.func.isRequired
+};
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./login-view.scss":"components/login-view/login-view.scss"}],"../node_modules/react-bootstrap/esm/divWithClassName.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36437,7 +36385,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
       _axios.default.get('https://sah-movie-database.herokuapp.com/movies', {
         headers: {
-          Authorization: 'Bearer ${token}'
+          Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
         //Assign the result to the state
@@ -36661,7 +36609,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60587" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61450" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

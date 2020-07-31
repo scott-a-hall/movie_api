@@ -1,32 +1,5 @@
-$primary-color: #d9d9d9;
-$secondary-color: #595959;
-$font-stack: sans-serif;
-
-.login-container {
-  background-color: $primary-color;
-  border-radius: 4px;
-  margin-top: 20px;
-  font-family: sans-serif;
-  width: 17rem;
-  padding: 10px;
-}
-
-.button-main {
-  color: #fff;
-  background-color: $secondary-color;
-  border: 0;
-  border-radius: 4px;
-  padding: 2px;
-  margin-left: 5px;
-  border-radius: 5px;
-}
-
-.button-main:hover {
-  background-color: #8c8c8c;
-}
-
-/*.login-form{
+.login-form{
     margin-top: 20px;
     padding-top: 10px;
     width: 20em;
-}*/
+}
