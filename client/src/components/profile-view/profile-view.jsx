@@ -26,21 +26,21 @@ export class ProfileView extends React.Component {
     getUser(token) {
         const username = localStorage.getItem('user');
 
-        Axios.get('https://sah-movie-database.herokuapp.com/users/${username}', {
-            headers: { Authorization: 'Bearer ${token'}
+        Axios.get(`https://sah-movie-database.herokuapp.com/users/${username}`, {
+            headers: { Authorization: `Bearer ${token}` }
         })
-        .then(response => {
-            this.setState({
-                Username: response.data.Username,
-                Password: response.data.Password,
-                Email: response.data.Email,
-                Birthday: response.data.Birthday,
-                FavoriteMovies: response.data.FavoriteMovies,
+            .then(response => {
+                this.setState({
+                    Username: response.data.Username,
+                    Password: response.data.Password,
+                    Email: response.data.Email,
+                    Birthday: response.data.Birthday,
+                    FavoriteMovies: response.data.FavoriteMovies,
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
             });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
     }
 
     render() {
@@ -52,12 +52,13 @@ export class ProfileView extends React.Component {
         return (
             <div className="profile-view">
                 <Card.Body>
-                    <Card.Title>Username: {this.state.Username}</Card.Title>
+                    <Card.Text>Username: {this.state.Username}</Card.Text>
+                    <Card.Text>Password: xxxxx</Card.Text>
                     <Card.Text>Email: {this.state.Email}</Card.Text>
                     <Card.Text>Birthday: {this.state.Birthday}</Card.Text>
                     Favorite Movies: {favoriteMoviesList.map((movie) => (
                         <div key={movie.id} className="favorite-movies">
-                            <Link to={'/movies/${movie._id}'}>
+                            <Link to={`/movies/${movie._id}`}>
                                 <Button variant="link">{movie.Title}</Button>
                             </Link>
                             <Button onClick={(e) => this.deleteFavoriteMovie(movie._id)}>Remove Movie</Button>
@@ -67,7 +68,7 @@ export class ProfileView extends React.Component {
                         <Button variant="primary">Update Profile</Button>
                     </Link>
                     <Button onClick={() => this.deleteUser()}>Delete User</Button>
-                    <Link to={'/'}>
+                    <Link to={`/`}>
                         <Button variant="link">Back</Button>
                     </Link>
                 </Card.Body>
