@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { SET_FILTER, SET_MOVIES } from '../actions/actions';
+import { SET_FILTER, SET_MOVIES, SET_USERS } from '../actions/actions';
 
 function visibilityFilter(state = '', action) {
     switch (action.type) {
@@ -20,9 +20,19 @@ function movies(state = [], action) {
     }
 }
 
+function users(state = [], action) {
+    switch (action.type) {
+        case SET_USERS:
+            return action.value;
+        default:
+            return state;
+    }
+}
+
 const moviesApp = combineReducers({
     visibilityFilter,
-    movies
+    movies,
+    users
 });
 
 export default moviesApp;
