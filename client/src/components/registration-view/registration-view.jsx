@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
 import './registration-view.scss';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -50,9 +49,7 @@ export function RegistrationView(props) {
                     <Form.Label>Birthday</Form.Label>
                     <Form.Control type="date" placeholder="MM/DD/YYYY" value={birthday} onChange={e => createBirthday(e.target.value)} />
                 </Form.Group>
-                <Link to={`/login`}>
-                    <Button type="submit" onClick={handleSubmit}>Register</Button>
-                </Link>
+                <Button type="submit" onClick={handleSubmit}>Register</Button>
             </Form>
         </Container>
     );
