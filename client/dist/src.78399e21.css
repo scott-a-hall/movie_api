@@ -1,3 +1,6 @@
+.card-container {
+  margin: 20px;
+}
 .registration-form {
   margin-top: 20px;
   padding-top: 10px;
@@ -7,9 +10,6 @@
   margin-top: 20px;
   padding-top: 10px;
   width: 20em;
-}
-.card-container {
-  margin: 20px;
 }
 .movie-view {
   margin: 20px;

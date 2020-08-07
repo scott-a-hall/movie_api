@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import './registration-view.scss';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
 export function RegistrationView(props) {
@@ -55,6 +54,6 @@ export function RegistrationView(props) {
     );
 };
 
-RegistrationView.propTyes = {
-    onRegister: PropTypes.func.isRequired
-};
+//RegistrationView.propTyes = {
+//    onRegister: PropTypes.func.isRequired
+//};
