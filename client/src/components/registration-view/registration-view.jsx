@@ -11,6 +11,14 @@ export function RegistrationView(props) {
     const [email, createEmail] = useState('');
     const [birthday, createBirthday] = useState('');
 
+    /**
+     * register a new user
+     * @function handleSubmit
+     * @param {string} username
+     * @param {string} password
+     * @param {string} email
+     * @param {date} birthday
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('https://sah-movie-database.herokuapp.com/users', {
