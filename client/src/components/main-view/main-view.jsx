@@ -93,6 +93,8 @@ class MainView extends React.Component {
         return (
             <Router basename='/client'>
                 <div className="main-view">
+                    {!!user && (
+                        <Button onClick={() => this.onLoggedOut()}>Log Out</Button>)}
                     <Route exact path='/' render={() => {
                         if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
                         return <MoviesList movies={movies} />;
@@ -102,7 +104,6 @@ class MainView extends React.Component {
                     <Route path='/movies/director/:name' render={({ match }) => (<DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} />)} />
                     <Route path='/movies/genre/:name' render={({ match }) => (<GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} />)} />
                     <Route path='/user' render={() => <ProfileView movies={movies} />} />
-                    <Button onClick={() => this.onLoggedOut()}>Log Out</Button>
                 </div>
             </Router>
         );
