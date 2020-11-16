@@ -51,9 +51,9 @@ let myLogger = (req, res, next) => {
 
 app.use(myLogger);
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
   res.send("My top 10 movies");
-});
+});*/
 
 //Gets the list of data about all movies
 app.get("/movies", passport.authenticate('jwt', { session: false }), (req, res) => {
